@@ -34,7 +34,7 @@ class Book {
 }
 
 
-public class BookDemo {
+public class IllegalStateDemo {
 
     public static void main(String[] args) {
         tryReadWithoutChecking();

@@ -11,15 +11,23 @@ class Person {
 
     public Person(String name, int age) {
         System.out.println("Creando Person con edad: " + age + " y nombre: " + name + " ...");
+        this.name = name;
+        setAge(age);
+    }
+
+    protected void setAge(int age) {
         if (!isValidAge(age)) {
             throw new IllegalArgumentException("Edad no valida");
         }
-        this.name = name;
         this.age = age;
     }
 
     public String getName() {
         return name;
+    }
+
+    public int getAge() {
+        return age;
     }
 }
 
