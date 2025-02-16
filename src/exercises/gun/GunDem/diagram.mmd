@@ -1,0 +1,17 @@
+classDiagram
+    direction BT
+    class Person {
+        + Person(String, Gender)
+        - String name
+        - Gender gender
+        + setName(String) void
+        + getName() String
+        + getGender() Gender
+    }
+
+    class Employee {
+        - Integer salary
+        + getSalary()
+    }
+
+    Employee --|> Person
