@@ -22,8 +22,6 @@ public class Person {
 
     public enum MaritalStatus {SINGLE, MARRIED, DIVORCED}
 
-    ;
-
     public static final int LEGAL_AGE = 18;
 
     String name;
@@ -35,10 +33,14 @@ public class Person {
         return age >= LEGAL_AGE;
     }
 
-    Person(String name, int age) {
+    public Person(String name, int age) {
         this.name = name;
         this.maritalStatus = MaritalStatus.SINGLE;
         this.age = validateAge(age);
+    }
+
+    public String getName() {
+        return name;
     }
 
     public boolean isMarried() {
@@ -113,6 +115,8 @@ class PersonDemo {
         testMarriage();
         testMarriageWithUnderLegalAge();
         testMarriageAndDivorce();
+        testDivorceWithoutMarriage();
+        testDivorceWithoutMarriagePrechecked();
     }
 
     private static void testMarriage() {
@@ -153,6 +157,30 @@ class PersonDemo {
         eva.divorce();
         System.out.println(adan);
         System.out.println(eva);
+    }
+
+    private static void testDivorceWithoutMarriage() {
+        Person adan = new Person("Adan", 18);
+
+        System.out.println(adan);
+        try {
+            adan.divorce();
+        } catch (IllegalStateException e) {
+            System.out.println(e.getMessage());
+        }
+        System.out.println(adan);
+    }
+
+    private static void testDivorceWithoutMarriagePrechecked() {
+        Person adan = new Person("Adan", 18);
+
+        System.out.println(adan);
+        if(adan.isMarried()) {
+            adan.divorce();
+        } else {
+            System.out.println(adan.getName() + " no se puede divorciar porque no esta casado");
+        }
+        System.out.println(adan);
     }
 
 
