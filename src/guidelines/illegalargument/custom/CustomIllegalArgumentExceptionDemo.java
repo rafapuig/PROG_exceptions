@@ -25,8 +25,8 @@ class NegativeAgeException extends IllegalArgumentException {
 
 
 class Person {
-    String name;
-    int age;
+    private final String name;
+    private final int age;
 
     public static boolean isValidAge(int age) {
         return age >= 0;

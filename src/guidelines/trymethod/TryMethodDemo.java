@@ -9,14 +9,24 @@ class Person {
         try {
             for (int i = 0; i < steps; i++) {
                 System.out.println("Dando un paso ...");
-                setEnergy(energy - 1);
+                setEnergy(energy - 1); // Decrementar en una unidad la energía
                 System.out.println("Nivel de energía restante: " + energy);
             }
         } catch (IllegalArgumentException e) {
+            // Captura la IllegalArgumentException y relanza una nueva excepción
+            // de tipo IllegalStateException
+            // Al llamador le interesa saber que el problema es por el estado del objeto Persona
+            // Se ha quedado sin energía
+            // Y no, que se ha usado un argumento no válido al llamar a setEnergy
             throw new IllegalStateException("No se puede caminar con la energía agotada", e);
         }
     }
 
+    /**
+     * Establece el valor del atributo energy
+     * Si el valor es negativo lanza la excepción IllegalArgumentException
+     * @param energy
+     */
     protected void setEnergy(int energy) {
         if (energy < 0) {
             throw new IllegalArgumentException("Energía agotada");
@@ -24,10 +34,11 @@ class Person {
         this.energy = energy;
     }
 
-    protected void tryWalk(int steps) {
+
+    protected void tryWalk(int steps) throws IllegalArgumentException {
         for (int i = 0; i < steps; i++) {
             System.out.println("Dando un paso ...");
-            setEnergy(energy - 1);
+            setEnergy(energy - 1); // Puede lanzar IllegalArgumentException si el argumento es < 0
             System.out.println("Nivel de energía restante: " + energy);
         }
     }
@@ -57,6 +68,7 @@ public class TryMethodDemo {
             System.out.println(e.getMessage());
         }
     }
+
 
     private static void tryMakePersonWalk(Person person, int steps) {
         System.out.println("Haciendo que una persona de " + steps + " pasos ...");

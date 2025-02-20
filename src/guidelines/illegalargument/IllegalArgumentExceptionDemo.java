@@ -5,6 +5,12 @@ class Person {
     String name;
     int age;
 
+    /**
+     * Método estático para permitir al código cliente de la clase que pueda verificar
+     * si un valor para el parámetro age de una Person será admitido como valido
+     * @param age
+     * @return true si el valor de age es admitido como válido
+     */
     public static boolean isValidAge(int age) {
         return age >= 0;
     }
@@ -31,10 +37,12 @@ class Person {
     }
 }
 
+
 public class IllegalArgumentExceptionDemo {
 
     public static void main(String[] args) {
         testCauseIllegalArgumentException();
+        testCheckBeforeCauseIllegalArgumentException();
     }
 
     private static void testCauseIllegalArgumentException() {
@@ -61,6 +69,12 @@ public class IllegalArgumentExceptionDemo {
         }
     }
 
+    /**
+     * Comprobar antes de realizar la accción si esta va a producir una excepción
+     * En este test se comprueba primero si crear una instancia de Person llamando al constructor
+     * con una edad negativa va a producir una IllegalArgumentException
+     */
+
     private static void testCheckBeforeCauseIllegalArgumentException() {
         Person person = null;
 
@@ -74,13 +88,13 @@ public class IllegalArgumentExceptionDemo {
         // De esta manera podemos anticiparnos y prevenir que se produzca la excepción
         if (Person.isValidAge(edad)) {
             person = new Person("Juanito", edad);
-
         }
+
         // El lenguaje Java nos proporciona la comparación con null para saber
         // si la llamada a un miembro de instancia mediante una referencia
         // va a provocar una NullPointerException y poder prevenir
         // que se produzca la excepción evitando la llamada
-        if (person == null) {
+        if (person != null) {
             System.out.println(person.getName());
         }
     }

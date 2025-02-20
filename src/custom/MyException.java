@@ -1,5 +1,9 @@
 package custom;
 
+/**
+ * La clase MyException, al heredar directamente de Exception
+ * es una excepción de tipo COMPROBADA por el compilador
+ */
 public class MyException extends Exception {
 
     // Crea una excepción con el mensaje null
