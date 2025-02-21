@@ -69,7 +69,7 @@ public class HttpConnectionDemo {
                 "4IPlg4Qazd4sFRuCUHIJ1T/f6c71da7eec727babcd554d843a528b8/" +
                 "gatocomuneuropeo-97?fm=webp&w=913";
 
-        HttpClient client = null;
+        HttpClient client = HttpClient.newBuilder().build();
         try {
             client = HttpClient.newHttpClient();
         } catch (UncheckedIOException e) {
