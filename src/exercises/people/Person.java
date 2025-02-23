@@ -24,23 +24,37 @@ public class Person {
 
     public static final int LEGAL_AGE = 18;
 
-    String name;
-    int age;
+    private final String name;
+    private final int age;
     private Person spouse;
     private MaritalStatus maritalStatus;
 
-    public boolean isLegalAged() {
-        return age >= LEGAL_AGE;
+    public static boolean isValidAge(int age) {
+        return age >= 0; // una edad es valida si no es un valor negativo
     }
+
+    public static int validateAge(int age) {
+        if (!isValidAge(age)) {
+            throw new IllegalAgeException("La edad de la persona debe ser mayor o igual a cero");
+        }
+        return age;
+    }
+
+
 
     public Person(String name, int age) {
         this.name = name;
-        this.maritalStatus = MaritalStatus.SINGLE;
         this.age = validateAge(age);
+        this.maritalStatus = MaritalStatus.SINGLE;
+        this.spouse = null;
     }
 
     public String getName() {
         return name;
+    }
+
+    public int getAge() {
+        return age;
     }
 
     public boolean isMarried() {
@@ -55,12 +69,17 @@ public class Person {
         return spouse;
     }
 
+
+    public boolean isLegalAged() {
+        return age >= LEGAL_AGE;
+    }
+
     public void marryWith(Person fiancee) {
         if (fiancee == null) {
             throw new IllegalArgumentException("La persona prometida no puede ser null");
         }
         if (!fiancee.isLegalAged()) {
-            throw new IllegalArgumentException("La persona prometida no puede tener menor de " + LEGAL_AGE);
+            throw new IllegalArgumentException("La persona prometida no puede tener menos de " + LEGAL_AGE + "años");
         }
         if (fiancee.isMarried()) {
             throw new IllegalArgumentException("La persona prometida no puede ser una persona casada");
@@ -77,6 +96,11 @@ public class Person {
         this.spouse.maritalStatus = this.maritalStatus;
     }
 
+    /**
+     * Un objeto Person se divorcia de su cónyuge (si lo tiene)
+     * A su vez el cónyuge también queda divorciado del objeto Persona
+     * El estado civil de ambos pasa a ser DIVORCED
+     */
     public void divorce() {
         if (!isMarried()) {
             throw new IllegalStateException("La persona no esta casada, no se puede divorciar");
@@ -89,25 +113,15 @@ public class Person {
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", Person.class.getSimpleName() + "[", "]")
+        return new StringJoiner(", ", getClass().getSimpleName() + "{", "}")
                 .add("name='" + name + "'")
                 .add("age=" + age)
                 .add("spouse=" + (spouse != null ? spouse.name : "nadie"))
                 .add("maritalStatus=" + maritalStatus)
                 .toString();
     }
-
-    public static boolean isValidAge(int age) {
-        return age >= 0;
-    }
-
-    public static int validateAge(int age) {
-        if (!isValidAge(age)) {
-            throw new IllegalAgeException("La edad de la persona debe ser mayor o igual a cero");
-        }
-        return age;
-    }
 }
+
 
 class PersonDemo {
 
